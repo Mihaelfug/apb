@@ -62,7 +62,7 @@ endproperty
 //PSRTB must be driven low at read transfer
 property pstrb_low_at_read ;
    @(posedge PCLK) disable iff(!PRESETn)
-      PSEL && PWRITE |-> PSTRB == {(`APB_DATA_WIDTH/8){1'b0}} ;
+      PSEL && !PWRITE |-> PSTRB == {(`APB_DATA_WIDTH/8){1'b0}} ;
 endproperty
 
 //Operating States (see chapter 4 in APB5 documentation)

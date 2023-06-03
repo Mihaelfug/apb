@@ -45,7 +45,7 @@ property pr_generic_stable(signal) ;
       !$stable(signal) |-> setup_phase or idle_phase ;
 endproperty
 //same as pr_generic_stable but for PWDATA. it should be stable only in WRITE transfers, i.e. PWRITE=1
-property pwrite_in_wr_transfer ;
+property pwdata_in_wr_transfer ;
    @(posedge PCLK) disable iff(!PRESETn)
       !$stable(PWDATA) |-> (!PWRITE) or (setup_phase or idle_phase) ;
 endproperty
@@ -100,7 +100,7 @@ PADDR_stable_in_transfer     : assert property (pr_generic_stable(PADDR ))  else
 PWRITE_stable_in_transfer    : assert property (pr_generic_stable(PWRITE))  else $display("[%0t] Error! PWRITE must not change throughout the transfer", $time) ;
 PENABLE_stable_in_transfer   : assert property (penable_in_transfer)        else $display("[%0t] Error! PENABLE must not change throughout the access phase", $time) ;
 PSEL_stable_in_transfer      : assert property (psel_stable_in_transfer)    else $display("[%0t] Error! PSEL must not change throughout the transfer", $time) ;
-PWDATA_stable_in_wr_transfer : assert property (pwrite_in_wr_transfer)      else $display("[%0t] Error! PWDATA must not change throughout the write transfer", $time) ;
+PWDATA_stable_in_wr_transfer : assert property (pwdata_in_wr_transfer)      else $display("[%0t] Error! PWDATA must not change throughout the write transfer", $time) ;
 PSTRB_stable_in_transfer     : assert property (pr_generic_stable(PSTRB))   else $display("[%0t] Error! PSTRB must not change throughout the transfer", $time) ;
 PSTRB_low_in_read_transfer   : assert property (pstrb_low_at_read)          else $display("[%0t] Error! PSTRB must be driven low in read transfer", $time) ;
 PPROT_stable_in_transfer     : assert property (pr_generic_stable(PPROT))   else $display("[%0t] Error! PPROT must not change throughout the transfer", $time) ;
